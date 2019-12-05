@@ -35,6 +35,9 @@ public class J_Test : MonoBehaviour
 
             eMan.CreateEntity(eArch, entArray);
 
+            Material _mat = go.GetComponent<Renderer>().sharedMaterial;
+            Mesh _mesh = go.GetComponent<MeshFilter>().sharedMesh;
+
             for (int i = 0; i < entArray.Length; i++)
             {
                 Entity e = entArray[i];
@@ -43,14 +46,16 @@ public class J_Test : MonoBehaviour
                 eMan.SetComponentData(e, new J_Mover
                 {
                     speed = UnityEngine.Random.Range(0f, 10f),
-                    dir = math.normalize(new float3(UnityEngine.Random.Range(-100, 100), 0, UnityEngine.Random.Range(-100, 100)))
+                    dir = math.normalize(new float3(UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100), UnityEngine.Random.Range(-100, 100)))
                 });
+
+                _mat.color = Color.red;
 
                 eMan.SetSharedComponentData(e, new RenderMesh
                 {
-                    mesh = go.GetComponent<MeshFilter>().sharedMesh,
-                    material = go.GetComponent<Renderer>().sharedMaterial
-                });
+                    mesh = _mesh,
+                    material = _mat
+                }); ;
             }
 
             entArray.Dispose();
